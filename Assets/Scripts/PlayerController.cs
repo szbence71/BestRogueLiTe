@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float movementSpeed = 2f;
 
     private Rigidbody2D rb;
+    private Animator animator;
 
     private Vector2 movementDirection;
     // Start is called before the first frame update
@@ -19,7 +20,27 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movementDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        animator = GetComponent<Animator>();
+        
+        movementDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+       
+        if (movementDirection.y > 0)
+        {
+            animator.SetInteger("Direction", 2); // W
+        }
+        else if (movementDirection.x > 0)
+        {
+            animator.SetInteger("Direction", 3); // D
+        }
+        
+        else if (movementDirection.x < 0)
+        {
+            animator.SetInteger("Direction", 1); // A
+        }
+        else if (movementDirection.y < 0)
+        {
+            animator.SetInteger("Direction", 0); // S
+        }
     }
 
     private void FixedUpdate()
