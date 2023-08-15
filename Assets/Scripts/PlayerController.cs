@@ -14,16 +14,16 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        animator = GetComponent<Animator>();
-        
         movementDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-       
+        animator.SetBool("isMoving", movementDirection.sqrMagnitude >= 0.1f);
+        
         if (movementDirection.y > 0)
         {
             animator.SetInteger("Direction", 2); // W
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetInteger("Direction", 3); // D
         }
-        
+
         else if (movementDirection.x < 0)
         {
             animator.SetInteger("Direction", 1); // A
